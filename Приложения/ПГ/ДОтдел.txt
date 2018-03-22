@@ -1,0 +1,20 @@
+TProc
+InitMTA - mov MTA[номер метода], адрес метода
+LoadMTA
+VisitTProcs
+TAG_TB_PROC
+TAG_HID_PROC
+TAG_HID_TB_PROC
+receiver - приёмник с набором к которому привязываемся
+method
+mthno
+type bound procedure
+isDeref == 2 - флаг существования метода
+
+в TD после maxRecordExt*4 расположена таблица методов
+typ.link.adr ДЕЛИТЬ  10000H - номер метода
+typ.link.adr ОСТАТОК 10000H - адрес метода (цепочка вызовов)
+typ.n - число методов
+obj.link.typ - вид набора
+2 В obj.conval.setval - 'redefinition textually precedes procedure bound to base type'
+  у нас такого не случится
