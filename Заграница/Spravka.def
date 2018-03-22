@@ -1,0 +1,5 @@
+LIBRARY "Spravka"
+EXPORTS
+   Kluch=_Kluch@8
+   Nomer=_Nomer@8
+   Razdel=_Razdel@4

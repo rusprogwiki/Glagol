@@ -1,0 +1,10 @@
+Асм.asm дополнительные задачи на ассемблере
+ALink.bat преобразование всех .asm файлов в .obj файлы для ALink
+MSLink.bat преобразование всех .asm файлов в .obj файлы для MSLink
+ZADACHA.MAC подстановки для вызова ассемблерных задач
+Заграница.asm взаимодействие с внешними DLL
+Spravka.c для Spravka.dll
+Spravka.def для Spravka.dll
+Опись опись файлов
+Пускач.asm запуск приложений
+MSLinkARM.bat преобразование всех .asm файлов в .obj файлы для MSLink

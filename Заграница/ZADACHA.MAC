@@ -1,0 +1,27 @@
+; NASM макросы дл€ объ€влени€ задач
+
+%macro ZADACHA 1     ; начало объ€влени€ задачи
+%push ZADACHA
+global %1
+%1:     push ebp
+        mov  ebp,esp
+%assign %$priem 8
+%define %$pervpriem 8
+%define %$procname %1
+%endmacro
+
+%macro priem 0-1 4   ; приемники перечисл€ютс€ в обратном пор€дке
+%00     equ %$priem
+%assign %$priem %1 + %$priem
+%endmacro
+
+%imacro KON 0-1      ; конец объ€влени€ задачи
+%ifnctx ZADACHA
+%error `KON' без `ZADACHA'
+%else
+        pop ebp
+        ret %$priem - %$pervpriem
+%pop
+%endif
+%endmacro
+

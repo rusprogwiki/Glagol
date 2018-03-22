@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<!DOCTYPE hrc PUBLIC "-//Cail Lomecb//DTD Colorer HRC take5//EN"
+  "http://colorer.sf.net/2003/hrc.dtd">
+<hrc version="take5"
+     xmlns="http://colorer.sf.net/2003/hrc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://colorer.sf.net/2003/hrc http://colorer.sf.net/2003/hrc.xsd">
+  <type name="Glagol">
+
+    <annotation> 
+     <documentation>
+      Подсветка для языка Глагол.
+     </documentation>
+     <contributors><![CDATA[
+      http://glagol.nad.ru
+     ]]></contributors>
+    </annotation>
+
+    <region name="Слово"           parent="def:Keyword"/>
+    <region name="Текст"           parent="def:Text"/>
+    <region name="Пояснение"       parent="def:Comment"/>
+    <region name="ВложПояснение"   parent="def:CommentContent"/>
+    <region name="Цепочка"         parent="def:String"/>
+    <region name="НачПары"         parent="def:PairStart"/>
+    <region name="КонПары"         parent="def:PairEnd"/>
+    <region name="Тексторез"       parent="def:Directive"/>
+    <region name="СловоТекстореза" parent="def:TypeKeyword"/>
+    <region name="Общедост"        parent="def:Parameter"/>
+    <region name="Выход"           parent="def:Label"/>
+    <region name="Обход"           parent="def:TypeKeyword"/>
+    <!-- Для поиска объявлений задач -->
+    <region name="Задача"          parent="def:Function"/> 
+
+    <scheme name="схВложПояснения">
+      <inherit scheme="def:Comment"/>
+      <block start="/\(\*/" end="/\*\)/" 
+             scheme="схВложПояснения" region="ВложПояснение"
+             region00="НачПары" region10="КонПары"/>
+    </scheme>
+
+    <scheme name="схТекстореза">
+      <keywords region="СловоТекстореза">
+        <word name="ЕСЛИ"/>
+        <word name="ТО"/>
+        <word name="АЕСЛИ"/>  
+        <word name="ИНАЧЕ"/>
+        <word name="КОН"/>                            
+      </keywords>
+      <inherit scheme="Glagol"/>
+    </scheme>
+
+    <scheme name="Glagol">
+      <!-- Пояснение -->
+      <block start="/\(\*/" end="/\*\)/" 
+             scheme="схВложПояснения" region="Пояснение"
+             region00="НачПары" region10="КонПары"/>
+      <!-- Тексторез -->
+      <block start="/&lt;\*/" end="/\*&gt;/" 
+             scheme="схТекстореза" region="Тексторез" 
+             region00="НачПары" region10="КонПары"/>
+      <!-- Цепочки -->
+      <regexp match="/('.*?')/" region0="Цепочка"/>
+      <regexp match="/(&#34;.*?&#34;)/" region0="Цепочка"/>
+      <!-- Знак -->
+      <regexp match="/\b(\d[\dA-F]*X)\b/" region0="Цепочка"/>
+      <!-- Парные скобки -->
+      <block start="/(\()/" end="/(\))/" scheme="Glagol"
+             region00="Текст" region01="НачПары"
+             region10="Текст" region11="КонПары"/>
+      <block start="/(\[)/" end="/(\])/" scheme="Glagol"
+             region00="Текст" region01="НачПары"
+             region10="Текст" region11="КонПары"/>
+      <block start="/(\{)/" end="/(\})/" scheme="Glagol"
+             region00="Текст" region01="НачПары"
+             region10="Текст" region11="КонПары"/>
+      <!-- Парные указания -->
+      <block start="/\b(ЗАДАЧА)\b\M\s+(\w+)/" 
+             end="/\b(КОН)\b/" scheme="Glagol"
+             region00="Слово" region01="НачПары" region02="Задача"
+             region10="Слово" region11="КонПары"/>
+      <block start="/\b((ЕСЛИ)|(ОТ)|(КОЛЬЦО)|(ВЫБРАТЬ)|(ПОКА)|(НАБОР)|(ДЛЯ))\b/"
+             end="/\b(КОН)\b/" scheme="Glagol"
+             region00="Слово" region01="НачПары"
+             region10="Слово" region11="КонПары"/>
+      <block start="/\b(ПОВТОРЯТЬ)\b/" 
+             end="/\b(ДО)\b/" scheme="Glagol"
+             region00="Слово" region01="НачПары"
+             region10="Слово" region11="КонПары"/>
+      <!-- Общедоступные понятия -->
+      <regexp match="/(\w+[+\-])\M\s*[:;=,\(]/" region1="Общедост"/>
+      <!-- Символы -->
+      <keywords region="Текст">
+        <symb name="+"/>
+        <symb name="-"/>
+        <symb name="*"/>
+        <symb name="/"/>
+        <symb name="&lt;"/>
+        <symb name="&gt;"/>
+        <symb name="="/>
+        <symb name="#"/>
+        <symb name="^"/>
+        <symb name="."/>
+        <symb name=","/>
+        <symb name=":"/>
+        <symb name=";" region="Слово"/>
+      </keywords>
+      <!-- Служебные слова -->
+      <keywords region="Слово">
+        <word name="АЕСЛИ"/>  
+        <word name="БЕГУНОК"/>
+        <word name="В"/>
+        <word name="ВИД"/>
+        <word name="ВИДА"/>
+        <word name="ВОЗВРАТ" region="Выход"/>
+        <word name="ВЫЗОВ"   region="Выход"/>
+   <!-- <word name="ВЫБРАТЬ"/>                     -->
+        <word name="ВЫП"/>
+        <word name="ВЫХОД" region="Выход"/>
+        <word name="ДЕЛИТЬ"/>
+   <!-- <word name="ДЛЯ"/>                         -->
+        <word name="ДО"/>                              
+        <word name="ДОСТУП"/>
+   <!-- <word name="ЕСЛИ"/>                        -->
+        <word name="ЗАДАЧА"/>
+        <word name="И"/>
+        <word name="ИЗ"/>
+        <word name="ИЛИ"/>
+        <word name="ИНАЧЕ"/>
+        <word name="ИСПОЛЬЗУЕТ"/>
+        <word name="К"/>
+        <word name="КОД"/>
+   <!-- <word name="КОЛЬЦО"/>                      -->
+        <word name="КОН"/>                            
+        <word name="НАРЯД"/>                            
+   <!-- <word name="НАБОР"/>                       -->
+        <word name="НЕ"/>
+        <word name="ОСТАТОК"/>
+   <!-- <word name="ОТ"/>                          -->
+        <word name="ОТДЕЛ"/>
+        <word name="ПЕР"/>
+   <!-- <word name="ПОВТОРЯТЬ"/>                   -->
+   <!-- <word name="ПОКА"/>                        -->
+        <word name="ПО"/>
+        <word name="ПОСТ"/>
+        <word name="ПУСТО"/>
+        <word name="РЯД"/>
+        <word name="СЖАТЫЙ"/>
+        <word name="ТО"/>
+        <word name="УКАЗ"/>
+        <word name="ЦЕПЬ"/>
+        <word name="ЯВЛЯЕТСЯ"/>
+      </keywords>
+      <!-- Встроенные слова -->
+      <keywords region="Слово">
+        <word name="ВЕЩ"/>
+        <word name="ВКЛ"/>
+        <word name="ВЗНАК"/>
+        <word name="ВЦЕЛ"/>
+        <word name="ВШИРЦЕЛ"/>
+        <word name="ДЛИНА"/>
+        <word name="ЗНАК"/>
+        <word name="ЗАДАНО"/>
+        <word name="КЛЮЧ"/>
+        <word name="МАКС"/>
+        <word name="МИН"/>
+        <word name="МНОЖ"/>
+        <word name="МОДУЛЬ"/>
+        <word name="ОТКЛ"/>
+        <word name="ОБНУЛИТЬ"/>
+        <word name="ПОСТАВИТЬ"/>
+        <word name="ПРОВЕРИТЬ"/>
+        <word name="РАЗМЕР"/>
+        <word name="СМЕСТИТЬ"/>
+        <word name="СОЗДАТЬ"/>
+        <word name="СПИСАТЬ"/>
+        <word name="СТОП" region="Выход"/>
+        <word name="СУЩЕСТВУЕТ"/>
+        <word name="УВЕЛИЧИТЬ"/>
+        <word name="УЗК"/>
+        <word name="УЗКЦЕЛ"/>
+        <word name="УМЕНЬШИТЬ"/>
+        <word name="ШИРВЕЩ"/>
+        <word name="ШИРЦЕЛ"/>
+        <word name="ЦЕЛ"/>
+        <word name="ЦЕЛЧАСТЬ"/>
+        <word name="ЧЕТ"/>
+        <word name="ЯЧЦЕЛ"/>
+      </keywords>
+      <!-- Редко используемый отдел ОБХОД -->
+      <keywords region="Обход">
+        <word name="СРЕДА"/>
+        <word name="ОБХОД"/>
+        <word name="ОБХОД.Ячейка"/>
+        <word name="ОБХОД.Ячейки"/>
+        <word name="ОБХОД.Доступ"/>
+        <word name="ОБХОД.ПолучитьАдрес"/>
+        <word name="ОБХОД.Значение"/>
+        <word name="ОБХОД.ИзПамяти"/>
+        <word name="ОБХОД.ВПамять"/>
+        <word name="ОБХОД.Образ"/>
+        <word name="ОБХОД.Адрес"/>
+        <word name="ОБХОД.Цел8"/>
+        <word name="ОБХОД.Цел16"/>
+        <word name="ОБХОД.Цел32"/>
+        <word name="ОБХОД.Цел64"/>
+        <word name="ОБХОД.Вещ32"/>
+        <word name="ОБХОД.Вещ64"/>
+        <word name="ОБХОД.Узк"/>
+      </keywords>
+    </scheme>
+  </type>
+</hrc>

@@ -1,0 +1,58 @@
+<TrueTpl>
+  <Language File="*.Æ‚§" ignoreCase="0" Desc="É´†£Æ´" Compiler="èÉ" CP="2">
+    <Bracket Pattern="Öëãà .+"    Match="äéç;?"/>
+    <Bracket Pattern="ÇõÅêÄíú .+" Match="äéç;?"/>
+    <Bracket Pattern="èéäÄ .+"    Match="äéç;?"/>
+    <Bracket Pattern="èéÇíéêüíú"  Match="Ñé .+"/>
+    <Bracket Pattern="äéãúñé"     Match="äéç;?"/>
+    <Bracket Pattern="éí .+"      Match="äéç;?"/>
+    <Bracket Pattern="Ñãü .+"     Match="äéç;?"/>
+
+    <Indent Pattern="èéëí"              Next="1"/>
+    <Indent Pattern="ÇàÑ"               Next="1"/>
+    <Indent Pattern="èÖê"               Next="1"/>
+    <Indent Pattern="ìäÄá"              Next="1"/>
+    <Indent Pattern="ÄÖëãà .+" Line="0" Next="1" Relative="Öëãà .+"/>
+    <Indent Pattern="àçÄóÖ"             Next="1"/>
+    <Indent Pattern="\| .+"    Line="0" Next="1" Relative="ÇõÅêÄíú .+"/>
+
+    <Expand Pattern="éíÑÖã" Init="1" To="\?'ç†ß¢†≠®•'"
+      "(******************************************************************************)\n"
+      "                              éíÑÖã \0;\n\["
+      "(******************************************************************************\n"
+      " * çÄáçÄóÖçàÖ: \p\n"
+      "******************************************************************************)\n"
+      "\n\[àëèéãúáìÖí ;\n\nìäÄá\n\näéç \0."/>
+    <Expand Pattern="á|ÄÑÄóÄ"    At="Begin" To="\?'ç†ß¢†≠®•'\["
+      "(******************************************************************************)\n"
+      "áÄÑÄóÄ \0();\n"
+      "(* ñ•´Ï:  \p\n"
+      " * ÑÆ:    <> - \n"
+      "* èÆ·´•: <> - \n"
+      "* é‚¢•‚: \n"
+      "*)\n\["
+      "ìäÄá\n\näéç \0;\n"/>
+    <Expand Pattern="\(\*\*" Imm="*" At=".*\p" To=
+      "\p(******************************************************************************)"/>
+    <Expand Pattern="Çé|áÇêÄí"              To="ÇéáÇêÄí "/>
+    <Expand Pattern="ìÇ|Öãàóàíú"            To="ìÇÖãàóàíú(\p);"/>
+    <Expand Pattern="ìå|Öçúòàíú"            To="ìåÖçúòàíú(\p);"/>
+    <Expand Pattern="Ö|ëãà"                 To="Öëãà \p íé\näéç;"/>
+    <Expand Pattern="Ä|Öëãà"                To="ÄÖëãà \p íé"/>
+    <Expand Pattern="Çõ|ÅêÄíú"              To="ÇõÅêÄíú \p àá\n| :\nàçÄóÖ\näéç;"/>
+    <Expand Pattern="è|éäÄ"                 To="èéäÄ \p Çõè\näéç;"/>
+    <Expand Pattern="èéÇ|íéêüíú"            To="èéÇíéêüíú\nÑé\^\]\r"/>
+    <Expand Pattern="èê|éÇÖêàíú"            To="èêéÇÖêàíú(\p);"/>
+    <Expand Pattern="ä|éãúñé"               To="äéãúñé\näéç;\^\]\r"/>
+    <Expand Pattern="é|í"                   To="éí \p:= Ñé  Çõè\näéç;"/>
+    <Expand Pattern="Ñ|ãü"                  To="Ñãü \p ÇàÑÄ\näéç;"/>
+
+    <Comment Pattern="\'.*\'"/>
+    <Comment Pattern="&quot;.*&quot;"/>
+    <Comment Pattern="\(\*.*\*\)"/>
+    <Comment Pattern="&lt;\*.*\*&gt;"/>
+
+    <Exec Title="É´†£Æ´" Command="D:\É´†£Æ´\ë´„¶°Î\èÉ =F" Compiler="èÉ" Save="Current" Jump="First"/>
+    <Compiler Name="èÉ"   Error="^(.*)\((\d+):(\d+)\) - (.+)" File="1" Line="2" Col="3"/>
+  </Language>
+</TrueTpl>

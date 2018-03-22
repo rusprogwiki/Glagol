@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<!DOCTYPE hrc PUBLIC "-//Cail Lomecb//DTD Colorer HRC take5//EN"
+  "http://colorer.sf.net/2003/hrc.dtd">
+<hrc version="take5"
+     xmlns="http://colorer.sf.net/2003/hrc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://colorer.sf.net/2003/hrc http://colorer.sf.net/2003/hrc.xsd">
+   <type name="ARM">
+
+    <annotation> 
+     <documentation>ARM ассемблер.</documentation>
+     <contributors><![CDATA[http://glagol.nad.ru]]></contributors>
+    </annotation>
+
+    <region name="Текст"     parent="def:Text"/>
+    <region name="Слово"     parent="def:Keyword"/>
+    <region name="Регистр"   parent="def:Register"/>
+    <region name="Метка"     parent="def:Label"/>
+    <region name="Число10"   parent="def:NumberDec"/>
+    <region name="Число16"   parent="def:NumberHex"/>
+    <region name="Число2"    parent="def:NumberBin"/>
+    <region name="Цепочка"   parent="def:String"/>
+    <region name="Пояснение" parent="def:Comment"/>
+    <region name="Установка" parent="def:Directive"/>
+    <region name="НачПары"   parent="def:PairStart"/>
+    <region name="КонПары"   parent="def:PairEnd"/>
+    <!-- Для поиска объявлений задач -->
+    <region name="Задача"    parent="def:Function"/> 
+
+    <!-- Операции -->
+    <entity name="ОП1" value="(bl|b|add|adc|sub|sbc|and|eor|rsb|tst|cmp|orr|mov|bic|mvn|mul|mla|ldr|str|ldm|stm)"/>
+    <!-- Передача данных -->
+    <entity name="ОП2" value="(ia|ib|da|db|fd|ed|fa|ea)"/>
+    <!-- Условия -->
+    <entity name="ОП3" value="(eq|ne|cs|hs|cc|lo|mi|pl|vs|vc|hi|ls|ge|lt|gt|le|al|nv)"/>
+    <!-- Обновление флагов -->
+    <entity name="ОП4" value="(s)"/>
+    <!-- Размер данных -->
+    <entity name="ОП5" value="(h|b)"/>
+
+    <scheme name="ARM">
+      <regexp match="/\;.*$/"                region0="Пояснение"/>
+      <regexp match="/&#34;.*?&#34;/"        region0="Цепочка"/>
+      <regexp match="/^\M(\S+)\s+proc\b/i"   region1="Задача"/>
+      <regexp match="/\|.*?\|/"              region0="Метка"/>
+      <regexp match="/\b\d+\b/"              region0="Число10"/>
+      <regexp match="/\&amp;[0-9a-fA-F]+\b/" region0="Число16"/>
+      <regexp match="/\b0x[0-9a-fA-F]+\b/"   region0="Число16"/>
+      <regexp match="/2_[01]+\b/"            region0="Число2"/>
+      <block start="/(\[)/" end="/(\])/" scheme="ARM" region00="Текст" region01="НачПары" region10="Текст" region11="КонПары"/>
+      <block start="/(\{)/" end="/(\})/" scheme="ARM" region00="Текст" region01="НачПары" region10="Текст" region11="КонПары"/>
+      <!-- Служебные установки -->
+      <keywords ignorecase="yes" region="Установка">
+        <word name="area"/>
+        <word name=".text"   region="Текст"/>
+        <word name=".bss"    region="Текст"/>
+        <word name="code"/>
+        <word name="readonly"/>
+        <word name="data"/>
+        <word name="noinit"/>
+        <word name="dcb"/>
+        <word name="dcw"/>
+        <word name="dcd"/>
+        <word name="^"/>
+        <word name="#"/>
+        <word name="end"/>
+        <word name="endp"/>
+        <word name="org"/>
+        <word name="ltorg"/>
+        <word name="keep"/>
+        <word name="import"/>
+        <word name="export"/>
+        <word name="func"/>
+        <word name="proc"/>
+        <word name="include"/>
+        <word name="assert"/>
+        <word name="info"/>
+        <word name="ttl"/>
+        <word name="subt"/>
+        <word name="align"/>
+        <word name="equ"/>
+      </keywords>
+      <!-- Дополнительный сдвиг данных -->
+      <keywords ignorecase="yes" region="Текст">
+        <word name="lsl"/>
+        <word name="lsr"/>
+        <word name="asr"/>
+        <word name="ror"/>
+        <word name="rrx"/>
+      </keywords>
+      <!-- Регистры -->
+      <keywords ignorecase="yes" region="Регистр">
+        <word name="r0"/>
+        <word name="r1"/>
+        <word name="r2"/>
+        <word name="r3"/>
+        <word name="r4"/>
+        <word name="r5"/>
+        <word name="r6"/>
+        <word name="r7"/>
+        <word name="r8"/>
+        <word name="r9"/>
+        <word name="r10"/>
+        <word name="r11"/>
+        <word name="r12"/>
+        <word name="r13"/>
+        <word name="r14"/>
+        <word name="r15"/>
+        <word name="pc"/>
+        <word name="lr"/>
+        <word name="sp"/>
+        <word name="fp"/>
+      </keywords>
+      <!-- Ещё один вид меток -->
+      <regexp match="/^\S+/" region0="Метка"/>
+      <!-- Составная операция -->
+      <regexp match="/\b(%ОП1;%ОП2;?%ОП3;?%ОП4;?%ОП5;?)\b/i" region0="Слово"/>
+    </scheme>
+  </type>
+</hrc>

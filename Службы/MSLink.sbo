@@ -1,0 +1,6 @@
+"Пускач.obj"
+"Пускач.lib"
+/nologo
+/debug 
+/debugtype:both
+/stack:2000000,32768

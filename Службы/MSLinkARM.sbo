@@ -1,0 +1,6 @@
+"япедю1.obj"
+"coredll.lib"
+/nologo
+/entry:"Nachalo"
+/subsystem:windowsce
+/machine:arm
